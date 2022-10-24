@@ -54,13 +54,12 @@ def old_highscore():
         with open('highscore.json', "r") as f:
             loadedScores = json.load(f)
             sortedScores = sorted(loadedScores, key=lambda k: k["count_guesses"])
-            sortedScores = sortedScores[:5]
+            sortedScores = sortedScores[:5]     # Highscore auf die Top 5 begrenzen.
             print("\nDie aktuellen Highscores sind:\n")
             #Als Text printen
             #print(json.dumps(loadedScores)
             for score in sortedScores:
                 print(str(score["name"]) + "\t\t" + str(score["count_guesses"]) + " Versuche \t\tDatum: " + str(score["time"]))
-                #print("")
 
 
 def save_new_highscore(user: User):

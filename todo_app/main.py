@@ -79,9 +79,10 @@ def show_menu():
 
     MENU_TEXT = """
     Menu:
-    - (T)odays tasks
     - (F)ull list of tasks 
-    - (A)dd new task.
+    - (T)odays tasks
+    - (N)ot yet Done Tasks
+    - (A)dd new task
     - (C)check off task
     - (D)elete task
     - (E)xit
@@ -96,6 +97,8 @@ def get_users_menu_input():
         list_todays_tasks()
     elif menu_choice == "F":
         list_all_tasks()
+    elif menu_choice == "N":
+        list_not_yet_done_tasks()
     elif menu_choice == "A":
         add_new_task()
     elif menu_choice == "C":
@@ -129,6 +132,19 @@ def add_new_task():
 
 def list_todays_tasks():
     tasks = database_todays_tasks()
+    table = Table(show_header=True, header_style="bold green")
+    table.add_column("ID", style="dim")
+    table.add_column("To do")
+    table.add_column("Due to")
+    table.add_column("Done?")
+    
+    for task in tasks:
+        table.add_row(str(task.id), task.task, str(task.due_to), str(task.status))
+
+    console.print(table)
+
+def list_not_yet_done_tasks():
+    tasks = database_not_yet_done_tasks()
     table = Table(show_header=True, header_style="bold green")
     table.add_column("ID", style="dim")
     table.add_column("To do")
@@ -201,7 +217,9 @@ def database_todays_tasks():
     
     return session.query(Task).filter(Task.due_to == date.today()).all()
 
+def database_not_yet_done_tasks():
 
+    return session.query(Task).filter(Task.status == False).all()
 
 def database_delete_task(task: Task):
     """

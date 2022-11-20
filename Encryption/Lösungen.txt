@@ -1,0 +1,185 @@
+Aufgabe 1
+(a) Entschlüssele die in der Abbildung gezeigte Antwort von Asterix
+
+KDOORFDHVDUZLUKDEHQGHLQYHUVFKOXHVVHOXQJVYHUIDKUHQJHNQDFNW
+-> HALLOCAESARWIRHABENDEINVERSCHLUESSELUNGSVERFAHRENGEKNACKT
+----------> HALLO CAESAR WIR HABEN DEIN VERSCHLUESSELUNGSVERFAHREN GEKNACKT
+
+(b) Entschlüssele die Nachricht: Surjudpplhuxqj lvw hlqidfk qxu phjd jxw.
+
+Surjudpplhuxqj lvw hlqidfk qxu phjd jxw.
+----------> Programmierung ist einfach nur mega gut.
+
+(c) Verschlüssele analog eine selbst gewählte Nachricht. Benutze jetzt eine
+Alphabetverschiebung um 7 Zeichen, die 'A' durch 'H' ersetzt ('B' durch 'I', 'C' durch 'I'). Gib
+die Nachricht zusammen mit dem Schlüssel an deine Nachbarin bzw. deinen Nachbarn
+weiter. Sie bzw. er soll die verschlüsselte Nachricht dann wieder entschlüsseln.
+
+Jamigeo — heute um 15:06 Uhr
+@Mete Meine streng geheime Nachricht: THU TBZZ UPJOA PTTLY ZHNLU DHZ THU KLURA, HILY PTTLY KLURLU DHZ THU ZHNA.
+Keyvalue = 7
+-> MAN MUSS NICHT IMMER SAGEN WAS MAN DENKT, ABER IMMER DENKEN WAS MAN SAGT.
+
+# Meine geheime Nachricht: Eureka! -> Lbylrh!
+
+Mete — heute um 15:08 Uhr
+Lbylrh!
+
+Jamigeo — heute um 15:17 Uhr
+[...]
+Eine Griechischer Philosoph sagte einst: Eureka! Jetzt brauchen wir nur noch eine griechische Übersetzungssoftware...
+
+
+Aufgabe 2
+(a) Das Python-Programm zur Buchstabenverschiebung funktioniert nicht, wenn man z.B.
+zeichen = 'T' und schluessel = 10 vorgibt. Teste und begründe.
+
+Die Großbuchstaben sind in der ASCII Tabelle  con 65 bis 90.
+T hat einen Wert von 84. 
+Wenn wir ohne weiteres 10 addieren sind wir jenseits des Alphabets und bekommen keinen Buchstaben.
+Lösung, es muss eine Bedingung eingebaut werden, wenn die Zahl den Buchstabenbereich verlässt müssen 26 addoert oder subtrahiert werden.
+
+(b) Ändere das Python-Programm zur Buchstabenverschiebung so ab, dass es für alle
+sinnvollen Vorgaben zeichen = ... und schluessel = ... korrekt funktioniert.
+
+zeichen = 'P'
+schluessel = 7
+zahl = ord(zeichen)
+neueZahl = zahl + schluessel
+if neueZahl > 90:
+    neueZahl -= 26
+elif neueZahl < 65:
+    neueZahl += 26
+neuesZeichen = chr(neueZahl)
+print(neuesZeichen)
+
+Aufgabe 3
+Der letzte Funktionsaufruf liefert noch nicht das beabsichtigte Ergebnis. Ändere die
+Funktionsdefinition geeignet ab. Teste die Funktion dann mit weiteren Funktionsaufrufen.
+
+# Funktionsdefinition
+def verschiebung(zeichen, schluessel):
+    zahl = ord(zeichen)
+    neueZahl = zahl + schluessel
+    if neueZahl > 90:
+        neueZahl -= 26
+    elif neueZahl < 65:
+        neueZahl += 26
+    neuesZeichen = chr(neueZahl)
+    return neuesZeichen
+# Funktionsaufrufe
+print(verschiebung('P', 7))
+print(verschiebung('A', 3))
+print(verschiebung('T', 10))
+print(verschiebung('S', 2))
+print(verschiebung('E', 5))
+
+Console:
+W
+D
+D
+U
+J
+
+Aufgabe 4
+Ergänze die Funktionsdefinitionen im folgenden Programmgerüst passend. Benutze für die
+Funktion verschiebung das (korrekte) Ergebnis aus Aufgabe 3. Die Funktionsdefinition
+zur Funktion verschluesselung kann sich am gezeigten Algorithmus orientieren. Günstig
+ist es, die Funktion verschiebung dabei zu benutzen. Teste mit verschiedenen
+Funktionsaufrufen.
+
+# Funktionsdefinitionen
+def verschiebung(zeichen, schluessel):
+    zahl = ord(zeichen)
+    neueZahl = zahl + schluessel
+    if neueZahl > 90:
+        neueZahl -= 26
+    elif neueZahl < 65:
+        neueZahl += 26
+    neuesZeichen = chr(neueZahl)
+    return neuesZeichen
+
+def verschluesselung(text, schluessel):
+    neuerText = ''
+    for c in text:
+        neuerText += verschiebung(c, schluessel)
+    return neuerText
+
+# Funktionsaufrufe
+print(verschluesselung('ASTERIX', 3))
+print(verschluesselung('EUREKA', 7))
+print(verschluesselung('DESOXYRIBONUKLEINSAEURE', 10))
+
+Console:
+DVWHULA
+LBYLRH
+NOCYHIBSLYXEUVOSXCKOEBO
+
+Aufgabe 5
+(a) Texte, die mit der Funktion verschluesselung verschlüsselt wurden, können mit
+derselben Funktion entschlüsselt werden, wenn man den Schlüssel geeignet wählt. Zeige
+das mit geeigneten Beispielen.
+
+# Funktionsdefinitionen
+def verschiebung(zeichen, schluessel):
+    zahl = ord(zeichen)
+    neueZahl = zahl + schluessel
+    if neueZahl > 90:
+        neueZahl -= 26
+    elif neueZahl < 65:
+        neueZahl += 26
+    neuesZeichen = chr(neueZahl)
+    return neuesZeichen
+
+def verschluesselung(text, schluessel):
+    neuerText = ''
+    for c in text:
+        neuerText += verschiebung(c, schluessel)
+    return neuerText
+
+def entschluesselung(text, schluessel):
+    return verschluesselung(text, -schluessel)
+
+# Funktionsaufrufe
+print(verschluesselung('ASTERIX', 3))
+print(verschluesselung('DVWHULA', -3))
+
+Console:
+DVWHULA
+ASTERIX
+
+(b) Die Entschlüsselung von Texten, die mit dem Verschiebeverfahren verschlüsselt wurden,
+sollen mit demselben Schlüssel entschlüsselt werden. Entwickle hierfür eine geeignete
+Funktion entschluesselung.
+
+# Funktionsdefinitionen
+def verschiebung(zeichen, schluessel):
+    zahl = ord(zeichen)
+    neueZahl = zahl + schluessel
+    if neueZahl > 90:
+        neueZahl -= 26
+    elif neueZahl < 65:
+        neueZahl += 26
+    neuesZeichen = chr(neueZahl)
+    return neuesZeichen
+
+def verschluesselung(text, schluessel):
+    neuerText = ''
+    for c in text:
+        neuerText += verschiebung(c, schluessel)
+    return neuerText
+
+def entschluesselung(text, schluessel):
+    return verschluesselung(text, -schluessel)
+
+# Funktionsaufrufe
+print(verschluesselung('ASTERIX', 3))
+print(entschluesselung('DVWHULA', 3))
+print(verschluesselung('EUREKA', 7))
+print(entschluesselung('LBYLRH', 7))
+
+Console:
+DVWHULA
+ASTERIX
+LBYLRH
+EUREKA
